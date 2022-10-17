@@ -7,8 +7,12 @@
     <el-submenu index="1">
       <template slot="title"><i class="el-icon-message"></i>资产入库</template>
       <el-menu-item-group>
-        <el-menu-item index="1-1">资产展示</el-menu-item>
-        <el-menu-item index="1-2">资产核实</el-menu-item>
+        <router-link to="/display">
+          <el-menu-item index="1-1">资产展示</el-menu-item>
+        </router-link>
+        <router-link to="/verify">
+          <el-menu-item index="1-2">资产核实</el-menu-item>
+        </router-link>
       </el-menu-item-group>
     </el-submenu>
 
@@ -53,7 +57,7 @@ export default {
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 240px;
   height: 100vh;
-  overflow-y:hidden;
+  overflow-y: hidden;
 }
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {
