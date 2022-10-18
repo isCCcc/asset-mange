@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Display from "@/components/leftNav/inStorage/Display";
-import Verify from "@/components/leftNav/inStorage/Verify";
+import Maintain from "@/components/leftNav/maintain/Maintain";
+import Examine from "@/components/leftNav/outStorage/Examine";
 
 Vue.use(VueRouter)
 
@@ -14,18 +15,21 @@ const routes = [
         children: [
             {
                 path: '/display',
-                name: '资产展示',
+                name: '资产入库',
                 component: Display,
                 // hidden: true,
                 // meta: {
                 //   requireAuth: false
                 // }
+            }, {
+                path: '/maintain',
+                name: '产品维修',
+                component: Maintain,
+            }, {
+                path: '/examine',
+                name: '借用审批',
+                component: Examine,
             },
-            {
-                path: '/verify',
-                name: '资产核实',
-                component: Verify,
-            }
         ]
     },
 
