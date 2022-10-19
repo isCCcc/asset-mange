@@ -6,7 +6,7 @@
         <el-input placeholder="已废设备" v-model="scrapName"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button>报废申请</el-button>
+        <el-button @click="apply">报废申请</el-button>
       </el-form-item>
     </el-form>
 
@@ -25,6 +25,43 @@
         </el-descriptions>
       </template>
     </div>
+
+    <!--  报废申请弹出框信息  -->
+    <el-dialog title="报废申请" :visible.sync="dialogVisible"
+               width="30%" :before-close="handleClose">
+      <!--   表单信息   -->
+      <el-form ref="form" label-width="80px">
+        <el-form-item label="设备编号">
+          <el-input v-model="id" placeholder="请输入设备编号"/>
+        </el-form-item>
+        <el-form-item label="设备名称">
+          <el-input v-model="d_name" :disabled="true" placeholder="请输入正确的设备编号"/>
+        </el-form-item>
+        <el-form-item label="申请人">
+          <el-input v-model="uid" :disabled="true" placeholder="请输入正确的设备编号"/>
+        </el-form-item>
+        <el-form-item label="设备引入时间">
+          <el-input v-model="creatTime" :disabled="true" placeholder="请输入正确的设备编号"/>
+        </el-form-item>
+        <el-form-item label="设备报废时间">
+          <el-input v-model="desTime" placeholder="请输入正确的设备编号"/>
+        </el-form-item>
+        <el-form-item label="报废标签">
+          <el-radio-group v-model="tag">
+            <el-radio label="正常报废"></el-radio>
+            <el-radio label="异常报废"></el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="报废原因">
+          <el-input type="textarea" v-model="result"></el-input>
+        </el-form-item>
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="onSubmit" :plain="true">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -37,14 +74,62 @@ export default {
     return {
       source: JSON.parse(localStorage.getItem('scrapData'))
           .sort((a, b) => dayjs(b.s_time) - dayjs(a.s_time)),
+      assetData: JSON.parse(localStorage.getItem('assetData')),
       scrapData: '',  // 报废设备信息
-      scrapName: ''  // 查找报废设备名称
+      scrapName: '',  // 查找报废设备名称
+      dialogVisible: false, // 报废申请弹出框
+      id: '',  // 报废设备id
+      d_name: '',
+      uid: JSON.parse(localStorage.getItem('user'))[0].uid,
+      creatTime: '',
+      desTime: dayjs().format('YYYY-MM-DD'), // 设备报废时间
+      tag: '正常报废', // 报废标签
+      result: '', // 报废原因
+      flag: false, //报废状态
     }
   },
   created() {
     this.scrapData = this.source
   },
+  methods: {
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {
+          });
+    },
+    // 报废申请
+    apply() {
+      this.dialogVisible = true
+    },
+    onSubmit() {
+      //将新增数据存储到scrapData中
+      if (this.flag) {
+        this.dialogVisible = false
+        let scrapItem = {
+          s_id: this.id,
+          s_name: this.d_name,
+          s_create: this.creatTime,
+          s_time: this.desTime,
+          s_uid: this.uid,
+          s_res: this.result,
+          s_tag: this.tag,
+        }
+        this.source.push(scrapItem)
+        this.source.sort((a, b) => dayjs(b.s_time) - dayjs(a.s_time))
+        localStorage.setItem('scrapData', JSON.stringify(this.source))
+        //  将删除设备从assetData中删掉
+        let newAssetData = this.assetData.filter(item => item.id != this.id)
+        localStorage.setItem('assetData', JSON.stringify(newAssetData))
+      } else {
+        this.$message.error('提交错误！请输入正确的设备编号');
+      }
+    },
+  },
   watch: {
+    // 监视已废设备输入框
     scrapName(val) {
       if (!val) {
         this.scrapData = this.source
@@ -53,7 +138,21 @@ export default {
             item.s_name.indexOf(val) >= 0
         )
       }
-    }
+    },
+    //  监视申请报废id输入框
+    id(val) {
+      console.log(this.assetData);
+      let data = this.assetData.filter(item => item.id === val)[0]
+      if (data) {
+        this.flag = true
+        this.d_name = data.name
+        this.creatTime = data.storageTime
+        this.desTime = dayjs(this.desTime).format('YYYY-MM-DD')
+      } else {
+        this.flag = false
+        this.$message.error('请输入正确的设备编号');
+      }
+    },
   }
 }
 </script>
