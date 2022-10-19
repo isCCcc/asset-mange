@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import Display from "@/components/leftNav/inStorage/Display";
 import Maintain from "@/components/leftNav/maintain/Maintain";
 import Examine from "@/components/leftNav/outStorage/Examine";
+import Scrap from "@/components/leftNav/scrap/Scrap";
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,10 @@ const routes = [
                 path: '/examine',
                 name: '借用审批',
                 component: Examine,
+            }, {
+                path: '/scrap',
+                name: '报废中心',
+                component: Scrap,
             },
         ]
     },
