@@ -24,3 +24,4 @@ git commit -m 'update'
 # git push -f git@gitee.com:meatball-c/blanche-account-website.git master:gh-pages
 
 cd -
+echo https://iscccc.github.io/asset-manage-website/
