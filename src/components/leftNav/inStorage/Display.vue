@@ -170,7 +170,7 @@ export default {
         this.form.storage_uid = this.currentSid;
         this.tableData.push(this.form);
         localStorage.setItem('assetData', JSON.stringify(this.tableData))
-      };
+      }
       if( this.currentType == "edit" ){
         //更新的时候就把弹出来的表单中的数据写到要修改的表格中
         this.tableData[this.currentIndex].name=this.form.name;
@@ -181,7 +181,7 @@ export default {
         this.tableData[this.currentIndex].group=this.form.group;
         this.tableData[this.currentIndex].storage_uid=this.form.storage_uid;
         this.tableData[this.currentIndex].out_uid=this.form.out_uid;
-      };
+      }
       //这里再向后台发个post请求重新渲染表格数据
       localStorage.setItem('assetData', JSON.stringify(this.tableData))
       this.editFormVisible = false;
@@ -249,44 +249,44 @@ export default {
 
   //组件挂载后将数据存储到浏览器本地，第一次刷新后注释掉
   created() {
-    let tableData = [{
-      id: '1',
-      name: '设备A',
-      num: '10',
-      group: '一类',
-      status: '1',
-      storageTime:  '2016-05-04',
-      storage_uid: '1',
-      out_uid: ''
-    }, {
-      id: '2',
-      name: '设备B',
-      num: '10',
-      group: '二类',
-      status: '0',
-      storageTime:  '2016-05-04',
-      storage_uid: '1',
-      out_uid: ''
-    }, {
-      id: '3',
-      name: '设备C',
-      num: '10',
-      group: '三类',
-      status: '0',
-      storageTime:  '2016-05-04',
-      storage_uid: '1',
-      out_uid: ''
-    }, {
-      id: '4',
-      name: '设备D',
-      num: '10',
-      group: '四类',
-      status: '0',
-      storageTime:  '2016-05-04',
-      storage_uid: '1',
-      out_uid: ''
-    }]
-    localStorage.setItem('assetData', JSON.stringify(tableData))
+    // let tableData = [{
+    //   id: '1',
+    //   name: '设备A',
+    //   num: '10',
+    //   group: '一类',
+    //   status: '1',
+    //   storageTime: '2016-05-04',
+    //   storage_uid: '1',
+    //   out_uid: ''
+    // }, {
+    //   id: '2',
+    //   name: '设备B',
+    //   num: '10',
+    //   group: '二类',
+    //   status: '0',
+    //   storageTime: '2016-05-04',
+    //   storage_uid: '1',
+    //   out_uid: ''
+    // }, {
+    //   id: '3',
+    //   name: '设备C',
+    //   num: '10',
+    //   group: '三类',
+    //   status: '0',
+    //   storageTime: '2016-05-04',
+    //   storage_uid: '1',
+    //   out_uid: ''
+    // }, {
+    //   id: '4',
+    //   name: '设备D',
+    //   num: '10',
+    //   group: '四类',
+    //   status: '0',
+    //   storageTime: '2016-05-04',
+    //   storage_uid: '1',
+    //   out_uid: ''
+    // }]
+    // localStorage.setItem('assetData', JSON.stringify(tableData))
   },
 
   data() {

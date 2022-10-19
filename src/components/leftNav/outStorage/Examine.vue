@@ -126,6 +126,7 @@ export default {
       this.tableData = this.listSearch
 
     },
+    add(){},
   },
   data() {
     return {
