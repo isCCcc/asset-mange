@@ -14,8 +14,26 @@ export default {
     if (!JSON.parse(localStorage.getItem('user'))) {
       localStorage.setItem('user', JSON.stringify([
         {
-          uid: '04191329',
+          uid: '001',
           uname: '超级管理员',
+          identity: '超级管理员',
+          pwd: '123456'
+        }
+      ]))
+    }
+    //默认生成用户列表
+    if (!JSON.parse(localStorage.getItem('userList'))) {
+      localStorage.setItem('userList', JSON.stringify([
+        {
+          uid: '007',
+          uname: '超级管理员',
+          identity: '超级管理员',
+          pwd: '123456'
+        },
+        {
+          uid: '001',
+          uname: '普通管理员',
+          identity: '普通管理员',
           pwd: '123456'
         }
       ]))
@@ -79,48 +97,48 @@ export default {
       localStorage.setItem('maintainData', JSON.stringify(maintain))
     }
     // 默认生成报废历史记录信息
-    if(!JSON.parse(localStorage.getItem('scrapData'))){
+    if (!JSON.parse(localStorage.getItem('scrapData'))) {
       let scrapData = [
         {
-          s_id:'001',
-          s_name:'设备1',
-          s_create:'2015-10-01',
-          s_time:'2022-10-01',
-          s_uid:'04191329',
-          s_res:'设备老坏，无法继续维修',
-          s_tag:'正常报废',
-        },{
-          s_id:'002',
-          s_name:'设备2',
-          s_create:'2018-10-01',
-          s_time:'2021-10-01',
-          s_uid:'04191329',
-          s_res:'人为因素损坏，已完成后续理赔',
-          s_tag:'异常报废',
-        },{
-          s_id:'003',
-          s_name:'设备3',
-          s_create:'2019-10-01',
-          s_time:'2022-10-09',
-          s_uid:'04191329',
-          s_res:'设备老坏，无法继续维修',
-          s_tag:'正常报废',
-        },{
-          s_id:'004',
-          s_name:'设备4',
-          s_create:'2015-10-01',
-          s_time:'2022-10-01',
-          s_uid:'04191329',
-          s_res:'设备老坏',
-          s_tag:'正常报废',
-        },{
-          s_id:'005',
-          s_name:'设备5',
-          s_create:'2015-10-01',
-          s_time:'2022-10-19',
-          s_uid:'04191329',
-          s_res:'更新设备',
-          s_tag:'正常报废',
+          s_id: '001',
+          s_name: '设备1',
+          s_create: '2015-10-01',
+          s_time: '2022-10-01',
+          s_uid: '04191329',
+          s_res: '设备老坏，无法继续维修',
+          s_tag: '正常报废',
+        }, {
+          s_id: '002',
+          s_name: '设备2',
+          s_create: '2018-10-01',
+          s_time: '2021-10-01',
+          s_uid: '04191329',
+          s_res: '人为因素损坏，已完成后续理赔',
+          s_tag: '异常报废',
+        }, {
+          s_id: '003',
+          s_name: '设备3',
+          s_create: '2019-10-01',
+          s_time: '2022-10-09',
+          s_uid: '04191329',
+          s_res: '设备老坏，无法继续维修',
+          s_tag: '正常报废',
+        }, {
+          s_id: '004',
+          s_name: '设备4',
+          s_create: '2015-10-01',
+          s_time: '2022-10-01',
+          s_uid: '04191329',
+          s_res: '设备老坏',
+          s_tag: '正常报废',
+        }, {
+          s_id: '005',
+          s_name: '设备5',
+          s_create: '2015-10-01',
+          s_time: '2022-10-19',
+          s_uid: '04191329',
+          s_res: '更新设备',
+          s_tag: '正常报废',
         },
       ]
       localStorage.setItem('scrapData', JSON.stringify(scrapData))
