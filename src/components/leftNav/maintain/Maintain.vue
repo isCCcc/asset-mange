@@ -69,7 +69,6 @@
     <el-dialog title="维修记录" :visible.sync="historyVisible"
                width="30%">
       <template v-if="hasHistory">
-        kong
         <el-descriptions v-for=" (item,i) in maintainHistory" :key="i"
                          :title="item.m_time"
                          style="border-bottom: 1px solid rgba(0,0,0,.25);
