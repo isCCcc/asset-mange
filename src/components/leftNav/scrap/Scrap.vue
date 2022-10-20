@@ -72,7 +72,7 @@
     <el-dialog title="申请历史" :visible.sync="historyVisible"
                width="50%" :before-close="handleClose">
 
-      <el-table :data="scrapHistory" style="width: 100%">
+      <el-table stripe :data="scrapHistory" style="width: 100%">
         <el-table-column prop="s_id" label="设备编号">
         </el-table-column>
         <el-table-column prop="s_name" label="设备名称">
@@ -81,6 +81,11 @@
         </el-table-column>
         <el-table-column prop="s_uid" label="申请人">
         </el-table-column>
+        <!--折叠面板-->
+        <!--        <el-collapse-item title="可控 Controllability" name="4">-->
+        <!--          <div>用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>-->
+        <!--          <div>结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。</div>-->
+        <!--        </el-collapse-item>-->
         <el-table-column prop="s_status" label="审核状况" style="color:red;">
         </el-table-column>
 
@@ -114,23 +119,6 @@ export default {
       flag: false, //报废状态
 
       historyVisible: false, // 申请历史弹出框
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
     }
   },
   created() {
