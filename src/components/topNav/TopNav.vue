@@ -26,9 +26,9 @@ export default {
     },
     exit() {
       localStorage.removeItem('user')
-      this.$router.push('/login')
+      this.$router.push('/')
     },
-  }
+  },
 }
 </script>
 

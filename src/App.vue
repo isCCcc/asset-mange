@@ -11,16 +11,16 @@ export default {
     this.assetData = JSON.parse(localStorage.getItem('assetData'))
     this.maintainData = JSON.parse(localStorage.getItem('maintainData'))
     // 默认生成用户信息
-    if (!JSON.parse(localStorage.getItem('user'))) {
-      localStorage.setItem('user', JSON.stringify([
-        {
-          uid: '04190000',
-          uname: '超级管理员',
-          identity: '超级管理员',
-          pwd: '123456'
-        }
-      ]))
-    }
+    // if (!JSON.parse(localStorage.getItem('user'))) {
+    //   localStorage.setItem('user', JSON.stringify([
+    //     {
+    //       uid: '04190000',
+    //       uname: '超级管理员',
+    //       identity: '超级管理员',
+    //       pwd: '123456'
+    //     }
+    //   ]))
+    // }
     //默认生成用户列表
     if (!JSON.parse(localStorage.getItem('userList'))) {
       localStorage.setItem('userList', JSON.stringify([

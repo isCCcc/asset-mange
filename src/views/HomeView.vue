@@ -43,7 +43,7 @@ export default {
   beforeRouteEnter(to,from,next) {
     let user = localStorage.getItem('user')
     if (!user) {
-      this.$router.push('/login')
+      this.$router.push('/')
     }else {
       next()
     }
