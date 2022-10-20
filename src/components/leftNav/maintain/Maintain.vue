@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <div style="margin: 0 0 20px 0">资产维修中心</div>
     <!--查询筛选-->
     <el-form :inline="true" class="demo-form-inline">
       <el-form-item label="资产名称">
@@ -36,7 +37,6 @@
     </el-table>
 
     <!--  弹出框信息  -->
-    <!--    <el-button type="text" @click="dialogVisible = true">点击打开 Dialog</el-button>-->
     <el-dialog title="维修申请" :visible.sync="dialogVisible"
                width="30%" :before-close="handleClose">
       <!--   表单信息   -->
@@ -66,7 +66,7 @@
 
     <!--  维修历史记录  -->
     <el-dialog title="维修记录" :visible.sync="historyVisible"
-               width="30%">
+               width="50%">
       <template v-if="hasHistory">
         <el-descriptions v-for=" (item,i) in maintainHistory" :key="i"
                          :title="item.m_time"
@@ -77,7 +77,15 @@
           <el-descriptions-item label="维修人员">{{ item.u_id }}</el-descriptions-item>
           <el-descriptions-item label="维修原因">{{ item.m_desc }}</el-descriptions-item>
           <el-descriptions-item label="备注">
-            <el-tag size="small">{{ item.status }}</el-tag>
+            <template v-if="item.status==='维修失败'">
+              <el-tag size="small" type="danger">{{ item.status }}</el-tag>
+            </template>
+            <template v-else-if="item.status==='申请中'">
+              <el-tag size="small" type="info">{{ item.status }}</el-tag>
+            </template>
+            <template v-else>
+              <el-tag size="small" :type="item.status==='维修完成'?'success':''">{{ item.status }}</el-tag>
+            </template>
           </el-descriptions-item>
         </el-descriptions>
         <br>
@@ -184,21 +192,34 @@ export default {
     },
     //维修申请
     onSubmit() {
-      this.dialogVisible = false
-      this.maintainData.filter(item => {
-        if (item.m_id === this.form.m_id) {
-          let time = dayjs().format('YYYY-MM-DD')
-          item.m_status = '申请中'
-          item.m_history.push({
-            id:dayjs(), // 标识每一个子数据
-            root: this.form.u_id,
-            time: time,
-            status: '申请中',
-            desc: this.form.m_desc || '维修申请'
-          })
-        }
-      })
-      localStorage.setItem('maintainData', JSON.stringify(this.maintainData))
+      if (!this.form.m_desc) {
+        this.$notify.error({
+          title: '错误',
+          message: '请填写维修原因，以便排查。'
+        });
+      } else {
+        this.$notify({
+          title: '成功',
+          message: '已提交维修申请',
+          type: 'success'
+        });
+        this.dialogVisible = false
+        this.maintainData.filter(item => {
+          if (item.m_id === this.form.m_id) {
+            let time = dayjs().format('YYYY-MM-DD')
+            item.m_status = '申请中'
+            item.m_history.push({
+              id: dayjs(), // 标识每一个子数据
+              root: this.form.u_id,
+              time: time,
+              status: '申请中',
+              desc: this.form.m_desc || '维修申请'
+            })
+          }
+        })
+        localStorage.setItem('maintainData', JSON.stringify(this.maintainData))
+      }
+
     },
     showHistory(value) {
       this.historyVisible = true

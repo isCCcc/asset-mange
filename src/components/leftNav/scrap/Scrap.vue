@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <div style="margin: 0 0 20px 0">资产报废申请中心</div>
     <!--查询筛选-->
     <el-form :inline="true" class="demo-form-inline">
       <el-form-item label="已废设备">
@@ -73,11 +74,11 @@
                width="50%" :before-close="handleClose">
 
       <el-table stripe :data="scrapHistory" style="width: 100%">
-        <el-table-column prop="s_id" label="设备编号" />
-        <el-table-column prop="s_name" label="设备名称" />
-        <el-table-column prop="s_time" label="申请时间" />
-        <el-table-column prop="s_uid" label="申请人" />
-        <el-table-column prop="s_res" label="申请原因" />
+        <el-table-column prop="s_id" label="设备编号"/>
+        <el-table-column prop="s_name" label="设备名称"/>
+        <el-table-column prop="s_time" label="申请时间"/>
+        <el-table-column prop="s_uid" label="申请人"/>
+        <el-table-column prop="s_res" label="申请原因"/>
         <el-table-column prop="s_status" label="审核状况" width="200">
           <template slot-scope="scope">
             <div>

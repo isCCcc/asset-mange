@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    资产报废审批中心
+    <div style="margin: 0 0 20px 0">资产报废审批中心</div>
     <!--  列表展示  -->
     <el-table :data="scrapHistory" stripe style="width: 80vw">
       <el-table-column prop="s_id" label="设备编号">

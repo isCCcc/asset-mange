@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    产品维修受理中心
+    <div style="margin: 0 0 20px 0">产品维修受理中心</div>
     <!--  列表展示  -->
     <el-table :data="form" stripe style="width: 80vw">
       <!--      <el-table-column prop="uni_id" label="维修编号"/>-->
@@ -25,17 +25,6 @@
       </el-table-column>
 
     </el-table>
-
-    <!--  申请驳回弹出框  -->
-    <!--    <el-dialog title="审批意见" :visible.sync="dialogVisible"-->
-    <!--               width="30%" :before-close="handleClose">-->
-    <!--      <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="textarea">-->
-    <!--      </el-input>-->
-    <!--      <span slot="footer" class="dialog-footer">-->
-    <!--        <el-button @click="dialogVisible = false">取 消</el-button>-->
-    <!--        <el-button type="primary" @click="onSubmit" :plain="true">确 定</el-button>-->
-    <!--      </span>-->
-    <!--    </el-dialog>-->
   </div>
 </template>
 
