@@ -14,7 +14,7 @@
 
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
-          <template v-if="scope.row.m_status=='维修中'">
+          <template v-if="scope.row.m_status=='受理中'">
             <el-button @click="handleAccept(scope.row,'success')" type="text" size="small">完成</el-button>
             <el-button @click="handleAccept(scope.row,'fail')" type="text" size="small">失败</el-button>
           </template>
@@ -78,13 +78,16 @@ export default {
       })
       let maintain = JSON.parse(localStorage.getItem('maintainData'))
       maintain.map(item => {
+        let hasMaintain = false
         for (let history of item.m_history) {
           if (history.id === val.uni_id) {
             if (flag === 'success') history.status = '维修完成'
             else if (flag === 'fail') history.status = '维修失败'
             else history.status = '受理中'
-
           }
+          // eslint-disable-next-line no-unused-vars
+          if(history.status==='受理中') hasMaintain=true
+          if(!hasMaintain) item.m_status='已完成'
         }
       })
       localStorage.setItem('maintainData', JSON.stringify(maintain))
