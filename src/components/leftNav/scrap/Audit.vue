@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    审批中心
+    资产报废审批中心
     <!--  列表展示  -->
     <el-table :data="scrapHistory" stripe style="width: 80vw">
       <el-table-column prop="s_id" label="设备编号">
@@ -48,6 +48,15 @@ export default {
       textarea: '',
       row: '', // 记录被驳回的数据
       scrapHistory: JSON.parse(localStorage.getItem('scrapHistory')) || [],
+    }
+  },
+  //路由守卫，验证用户身份
+  beforeRouteEnter(to, from, next) {
+    let user = JSON.parse(localStorage.getItem('user'))[0]
+    if (user.identity === '超级管理员') {
+      next()
+    } else {
+      next('/noAllow')
     }
   },
   methods: {

@@ -7,6 +7,7 @@ import Examine from "@/components/leftNav/outStorage/Examine";
 import Scrap from "@/components/leftNav/scrap/Scrap";
 import Login from "@/views/Login";
 import Audit from "@/components/leftNav/scrap/Audit";
+import NoAllow from "@/components/leftNav/NoAllow";
 
 Vue.use(VueRouter)
 
@@ -41,10 +42,15 @@ const routes = [
                 path: '/scrap',
                 name: '报废中心',
                 component: Scrap,
-            },{
+            }, {
                 path: '/audit',
                 name: '审核中心',
                 component: Audit,
+            },
+            {
+                path: '/noAllow',
+                name: 'noAllow',
+                component: NoAllow,
             },
         ]
     },
