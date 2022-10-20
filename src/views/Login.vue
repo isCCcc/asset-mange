@@ -6,25 +6,14 @@
         <p>欢迎光临, 请输入您的账号和密码进行登录!</p>
       </div>
       <div class="right">
-        <!-- SVG提前准备好, 来自互联网 -->
-        <svg viewBox="0 0 320 300">
-          <defs>
-            <!-- 定义线性渐变 -->
-            <linearGradient inkscape:collect="always" id="linearGradient1" x1="13" y1="193.49992" x2="307"
-                            y2="193.49992" gradientUnits="userSpaceOnUse">
-              <stop style="stop-color:#0ff;" offset="0"/>
-              <stop style="stop-color:#f0f;" offset="1"/>
-            </linearGradient>
-          </defs>
-          <path
-              d="m 40,120.00016 239.99984,-3.2e-4 c 0,0 24.99263,0.79932 25.00016,35.00016 0.008,34.20084 -25.00016,35 -25.00016,35 h -239.99984 c 0,-0.0205 -25,4.01348 -25,38.5 0,34.48652 25,38.5 25,38.5 h 215 c 0,0 20,-0.99604 20,-25 0,-24.00396 -20,-25 -20,-25 h -190 c 0,0 -20,1.71033 -20,25 0,24.00396 20,25 20,25 h 168.57143"/>
-        </svg>
         <div class="form">
           <label for="account">账号</label>
-          <input type="text" id="account" autocomplete="off">
+          <input @click="toggle('name')" v-model="username" :class="inputActiveOne?'input-active':''"
+                 type="text" id="account" autocomplete="off">
           <label for="password">密码</label>
-          <input type="password" id="password">
-          <button id="submit">登录</button>
+          <input @click="toggle('pwd')" v-model="pwd" :class="inputActiveTwo?'input-active':''"
+                 type="password" id="password">
+          <button id="submit" class="btn" @click="submit">登录</button>
         </div>
       </div>
     </div>
@@ -33,11 +22,43 @@
 
 <script>
 export default {
-  name: "Login"
+  name: "Login",
+  data() {
+    return {
+      inputActiveOne: true,
+      inputActiveTwo: false,
+      btnActive: false,
+      username: '',
+      pwd: '',
+
+    }
+  },
+  methods: {
+    toggle(str) {
+      if (str === 'pwd') {
+        this.inputActiveTwo = true
+        this.inputActiveOne = false
+      } else {
+        this.inputActiveTwo = false
+        this.inputActiveOne = true
+      }
+    },
+    submit() {
+      let userList = JSON.parse(localStorage.getItem('userList'))
+      userList.map(item => {
+        if (item.uid === this.username && item.pwd === this.pwd) {
+          let user = []
+          user.push(item)
+          localStorage.setItem('user', JSON.stringify(user))
+          this.$router.push('/home')
+        }
+      })
+    }
+  }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 * {
   /* 初始化 */
   margin: 0;
@@ -133,18 +154,55 @@ export default {
   background-color: transparent;
   border: none;
   outline: none;
+  border-bottom: 2px solid transparent;
   text-indent: 2px;
 }
 
 .form button {
   width: 100%;
-  height: 30px;
+  height: 50px;
   color: #d0d0d0;
   font-size: 18px;
   background-color: transparent;
-  border: none;
-  margin-top: 40px;
+  //border: none;
+  border: 2px solid transparent;
+  margin-top: 20px;
   cursor: pointer;
-  outline: none;
+  //outline: none;
 }
+
+#body {
+  .container {
+    .right {
+      .form {
+        .input-active {
+          /*首先我们设置边框只显示底部，宽度为2px的实线。*/
+          //border-bottom: 2px solid;
+          /*设置线性渐变*/
+          //animation: display 1s ease;
+          border-image: linear-gradient(90deg, #00FFFFFF 0%, #FF00FFFF 100%) 2 2 2 2;
+        }
+
+        .btn:hover {
+          background-color: #e2e2e5;
+          color: #474a59;
+          border-radius: 20px;
+          /*首先我们设置边框只显示底部，宽度为2px的实线。*/
+          //border: 2px solid transparent;
+          /*设置线性渐变*/
+          //border-image: linear-gradient(90deg, #00FFFFFF 0%, #FF00FFFF 100%) 2 2 2 2;
+        }
+
+        @keyframes display {
+          from {
+          }
+          to {
+            border-image: linear-gradient(90deg, #00FFFFFF 0%, #FF00FFFF 100%) 2 2 2 2;
+          }
+        }
+      }
+    }
+  }
+}
+
 </style>

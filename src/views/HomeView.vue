@@ -1,6 +1,6 @@
 <template>
   <!-- 侧边导航栏 -->
-  <el-container class="index-con" >
+  <el-container class="index-con">
     <el-aside style="width: 240px">
       <LeftNav></LeftNav>
     </el-aside>
@@ -13,15 +13,7 @@
 
       <!--   内容主体   -->
       <el-main clss="index-main">
-        <router-view />
-<!--        <el-table :data="tableData">-->
-<!--          <el-table-column prop="date" label="日期" width="140">-->
-<!--          </el-table-column>-->
-<!--          <el-table-column prop="name" label="姓名" width="120">-->
-<!--          </el-table-column>-->
-<!--          <el-table-column prop="address" label="地址">-->
-<!--          </el-table-column>-->
-<!--        </el-table>-->
+        <router-view/>
       </el-main>
     </el-container>
   </el-container>
@@ -48,6 +40,14 @@ export default {
     LeftNav
   },
   // components: {left-nav}
+  beforeRouteEnter(to,from,next) {
+    let user = localStorage.getItem('user')
+    if (!user) {
+      this.$router.push('/login')
+    }else {
+      next()
+    }
+  }
 
 };
 </script>
@@ -65,12 +65,14 @@ export default {
   background-color: #334157;
   margin: 0px;
 }
+
 .asideshow {
   width: 240px !important;
   height: 100%;
   background-color: #334157;
   margin: 0px;
 }
+
 .index-header,
 .index-main {
   padding: 0px;
