@@ -162,9 +162,9 @@ export default {
         }
         this.scrapHistory.push(scrapItem)
         localStorage.setItem('scrapHistory', JSON.stringify(this.scrapHistory))
-        this.$message({
-          showClose: true,
-          message: '申请成功',
+        this.$notify({
+          title: '成功',
+          message: '申请成功，待审批',
           type: 'success'
         });
 
@@ -175,7 +175,11 @@ export default {
         //   let newAssetData = this.assetData.filter(item => item.id != this.id)
         //   localStorage.setItem('assetData', JSON.stringify(newAssetData))
       } else {
-        this.$message.error('提交错误！请输入正确的设备编号');
+        this.$notify.error({
+          title: '错误',
+          message: '提交错误！请输入正确的设备编号'
+        });
+        // this.$message.error('提交错误！请输入正确的设备编号');
       }
     },
     //报废申请历史
