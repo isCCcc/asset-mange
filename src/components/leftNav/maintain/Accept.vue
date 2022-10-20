@@ -38,6 +38,15 @@ export default {
       form: [],
     }
   },
+  //路由守卫，验证用户身份
+  beforeRouteEnter(to, from, next) {
+    let user = JSON.parse(localStorage.getItem('user'))[0]
+    if (user.identity === '超级管理员') {
+      next()
+    } else {
+      next('/noAllow')
+    }
+  },
   created() {
     this.maintainData.map(item => {
       for (let val of item.m_history) {
@@ -75,8 +84,8 @@ export default {
             else history.status = '受理中'
           }
           // eslint-disable-next-line no-unused-vars
-          if(history.status==='受理中') hasMaintain=true
-          if(!hasMaintain) item.m_status='已完成'
+          if (history.status === '受理中') hasMaintain = true
+          if (!hasMaintain) item.m_status = '已完成'
         }
       })
       localStorage.setItem('maintainData', JSON.stringify(maintain))
