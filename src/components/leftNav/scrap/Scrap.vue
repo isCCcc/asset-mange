@@ -86,8 +86,38 @@
         <!--          <div>用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>-->
         <!--          <div>结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。</div>-->
         <!--        </el-collapse-item>-->
-        <el-table-column prop="s_status" label="审核状况" style="color:red;">
+        <!--        <el-table-column prop="s_status" label="审核状况" style="color:red;">-->
+        <!--        </el-table-column>-->
+        <el-table-column prop="s_status" label="审核状况" width="200">
+          <template slot-scope="scope">
+            <div>
+              <template v-if="scope.row.s_status==='待审批'|| scope.row.s_status==='已审批'">
+                <el-button type="text" size="small" @click="toggle(scope.row)">{{ scope.row.s_status }}</el-button>
+              </template>
+              <template v-else>
+                <el-collapse accordion>
+                  <el-collapse-item>
+                    <template slot="title">
+                      <span style="color: #f56c6c;background: transparent">
+                        {{ scope.row.s_status }}
+                        <i class="header-icon el-icon-info"/>
+                      </span>
+                    </template>
+                    <div>{{ scope.row.s_detail }}</div>
+                  </el-collapse-item>
+                </el-collapse>
+                <!--                <el-collapse>-->
+                <!--                  <el-collapse-item :title="scope.row.s_status" style="color: red;">-->
+                <!--                    <div> {{ scope.row.s_detail }}</div>-->
+                <!--                  </el-collapse-item>-->
+                <!--                </el-collapse>-->
+
+              </template>
+
+            </div>
+          </template>
         </el-table-column>
+
 
       </el-table>
 
@@ -147,7 +177,7 @@ export default {
           s_res: this.result,
           s_tag: this.tag,
           s_status: '待审批',
-          s_detail:'', // 驳回意见
+          s_detail: '', // 驳回意见
         }
         this.scrapHistory.push(scrapItem)
         localStorage.setItem('scrapHistory', JSON.stringify(this.scrapHistory))

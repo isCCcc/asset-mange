@@ -19,7 +19,7 @@
       </el-table-column>
 
       <el-table-column fixed="right" label="操作" width="100">
-        <template slot-scope="scope">
+        <template slot-scope="scope" v-if="scope.row.s_status==='待审批'">
           <el-button @click="handlePass(scope.row)" type="text" size="small">通过</el-button>
           <el-button @click="handleBack(scope.row)" type="text" size="small">驳回</el-button>
         </template>
