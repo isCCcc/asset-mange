@@ -10,6 +10,9 @@
         <router-link to="/display">
           <el-menu-item index="1-1">资产入库</el-menu-item>
         </router-link>
+        <router-link to="/verify">
+          <el-menu-item index="1-2">修改记录</el-menu-item>
+        </router-link>
       </el-menu-item-group>
     </el-submenu>
 

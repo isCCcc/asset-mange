@@ -168,11 +168,23 @@ export default {
         this.form.storageTime = this.form.storageTime;
         this.form.id = this.currentid+1;
         this.form.storage_uid = this.currentSid;
+        this.form.storage_uid =this.uid;
         this.tableData.push(this.form);
         localStorage.setItem('assetData', JSON.stringify(this.tableData))
-      }
+      };
       if( this.currentType == "edit" ){
         //更新的时候就把弹出来的表单中的数据写到要修改的表格中
+        this.record.id=this.tableData[this.currentIndex].id
+        this.record.name=this.tableData[this.currentIndex].name
+        this.record.uname=this.form.name
+        this.record.num=this.tableData[this.currentIndex].num
+        this.record.unum=this.form.num
+        this.record.status=this.tableData[this.currentIndex].status
+        this.record.ustatus=this.form.status
+        this.record.group=this.tableData[this.currentIndex].group
+        this.record.ugroup=this.form.group
+
+        this.updateRecordData.push(this.record);
         this.tableData[this.currentIndex].name=this.form.name;
         this.tableData[this.currentIndex].num=this.form.num;
         this.tableData[this.currentIndex].status=this.form.status;
@@ -181,9 +193,10 @@ export default {
         this.tableData[this.currentIndex].group=this.form.group;
         this.tableData[this.currentIndex].storage_uid=this.form.storage_uid;
         this.tableData[this.currentIndex].out_uid=this.form.out_uid;
-      }
+      };
       //这里再向后台发个post请求重新渲染表格数据
       localStorage.setItem('assetData', JSON.stringify(this.tableData))
+      localStorage.setItem('updateRecordData', JSON.stringify(this.updateRecordData))
       this.editFormVisible = false;
     },
     add(){
@@ -249,48 +262,52 @@ export default {
 
   //组件挂载后将数据存储到浏览器本地，第一次刷新后注释掉
   created() {
-    // let tableData = [{
-    //   id: '1',
-    //   name: '设备A',
-    //   num: '10',
-    //   group: '一类',
-    //   status: '1',
-    //   storageTime: '2016-05-04',
-    //   storage_uid: '1',
-    //   out_uid: ''
-    // }, {
-    //   id: '2',
-    //   name: '设备B',
-    //   num: '10',
-    //   group: '二类',
-    //   status: '0',
-    //   storageTime: '2016-05-04',
-    //   storage_uid: '1',
-    //   out_uid: ''
-    // }, {
-    //   id: '3',
-    //   name: '设备C',
-    //   num: '10',
-    //   group: '三类',
-    //   status: '0',
-    //   storageTime: '2016-05-04',
-    //   storage_uid: '1',
-    //   out_uid: ''
-    // }, {
-    //   id: '4',
-    //   name: '设备D',
-    //   num: '10',
-    //   group: '四类',
-    //   status: '0',
-    //   storageTime: '2016-05-04',
-    //   storage_uid: '1',
-    //   out_uid: ''
-    // }]
-    // localStorage.setItem('assetData', JSON.stringify(tableData))
+    let tableData = [{
+      id: '1',
+      name: '设备A',
+      num: '10',
+      group: '一类',
+      status: '1',
+      storageTime:  '2021-05-04',
+      storage_uid: '1',
+      out_uid: ''
+    }, {
+      id: '2',
+      name: '设备B',
+      num: '10',
+      group: '二类',
+      status: '0',
+      storageTime:  '2021-05-04',
+      storage_uid: '1',
+      out_uid: ''
+    }, {
+      id: '3',
+      name: '设备C',
+      num: '10',
+      group: '三类',
+      status: '0',
+      storageTime:  '2021-05-04',
+      storage_uid: '1',
+      out_uid: ''
+    }, {
+      id: '4',
+      name: '设备D',
+      num: '10',
+      group: '四类',
+      status: '0',
+      storageTime:  '2021-05-04',
+      storage_uid: '1',
+      out_uid: ''
+    }]
+    let updateRecordData = [];
+    localStorage.setItem('assetData', JSON.stringify(tableData))
+    localStorage.setItem('updateRecordData', JSON.stringify(updateRecordData))
+    this.uid = JSON.parse(localStorage.getItem('user')).uid
   },
 
   data() {
     return {
+      uid:'',
       data:[],
       filterDataShow: [], //储存符合条件的数据
       listSearch: [],
@@ -310,10 +327,22 @@ export default {
         storage_uid: '',
         out_uid: ''
       },
+      record: {
+        id:'',
+        name: '',
+        num: '',
+        group: '',
+        status: '',
+        uname: '',
+        unum: '',
+        ugroup: '',
+        ustatus: ''
+      },
       formInline: {
         name: '',
         group: ''
       },
+      updateRecordData:  JSON.parse(localStorage.getItem('updateRecordData')),
       tableData:  JSON.parse(localStorage.getItem('assetData'))
     }
   }

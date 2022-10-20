@@ -9,6 +9,7 @@ import Login from "@/views/Login";
 import Audit from "@/components/leftNav/scrap/Audit";
 import NoAllow from "@/components/leftNav/NoAllow";
 import Accept from "@/components/leftNav/maintain/Accept";
+import Verify from "@/components/leftNav/inStorage/Verify";
 
 Vue.use(VueRouter)
 
@@ -28,7 +29,13 @@ const routes = [
                 path: '/display',
                 name: '资产入库',
                 component: Display,
-            }, {
+            },
+            {
+                path: '/verify',
+                name: '修改记录表',
+                component: Verify,
+            },
+            {
                 path: '/maintain',
                 name: '产品维修',
                 component: Maintain,
