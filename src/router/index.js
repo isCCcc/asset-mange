@@ -8,6 +8,7 @@ import Scrap from "@/components/leftNav/scrap/Scrap";
 import Login from "@/views/Login";
 import Audit from "@/components/leftNav/scrap/Audit";
 import NoAllow from "@/components/leftNav/NoAllow";
+import Accept from "@/components/leftNav/maintain/Accept";
 
 Vue.use(VueRouter)
 
@@ -34,6 +35,10 @@ const routes = [
                 path: '/maintain',
                 name: '产品维修',
                 component: Maintain,
+            }, {
+                path: '/accept',
+                name: '受理中心',
+                component: Accept,
             }, {
                 path: '/examine',
                 name: '借用审批',

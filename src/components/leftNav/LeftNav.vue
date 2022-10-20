@@ -29,6 +29,9 @@
         <router-link to="/maintain">
           <el-menu-item index="3-1">产品维修</el-menu-item>
         </router-link>
+        <router-link to="/accept">
+          <el-menu-item index="3-2">受理中心</el-menu-item>
+        </router-link>
       </el-menu-item-group>
     </el-submenu>
 
