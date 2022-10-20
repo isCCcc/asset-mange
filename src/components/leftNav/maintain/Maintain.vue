@@ -23,7 +23,6 @@
       <el-table-column prop="m_name" label="产品名称"/>
       <el-table-column prop="m_group" label="产品分类"/>
       <el-table-column prop="m_create" label="到期时间"/>
-
       <el-table-column prop="m_status" label="维修状态"/>
       <el-table-column prop="u_id" label="维修申请人"/>
       <el-table-column prop="m_ohter" label="操作">
@@ -76,15 +75,15 @@
           <el-descriptions-item label="设备编码">{{ item.m_id }}</el-descriptions-item>
           <el-descriptions-item label="设备名称">{{ item.m_name }}</el-descriptions-item>
           <el-descriptions-item label="维修人员">{{ item.u_id }}</el-descriptions-item>
-          <el-descriptions-item label="备注">
-            <el-tag size="small">正常维修</el-tag>
-          </el-descriptions-item>
           <el-descriptions-item label="维修原因">{{ item.m_desc }}</el-descriptions-item>
+          <el-descriptions-item label="备注">
+            <el-tag size="small">{{ item.status }}</el-tag>
+          </el-descriptions-item>
         </el-descriptions>
         <br>
       </template>
       <template v-else>
-          暂无维修记录
+        暂无维修记录
       </template>
     </el-dialog>
   </div>
@@ -137,7 +136,6 @@ export default {
       checkName,
       maintainHistory,
       today,
-      // applyMaintain:assetData[0],
       form: {
         m_id: '',
         m_name: '',
@@ -146,13 +144,9 @@ export default {
         m_status: '',
         u_id: '',
         m_desc: ''
-        // u_id:JSON.parse(localStorage.getItem('user'))
       }
     }
-  }
-  ,
-  computed: {}
-  ,
+  },
   watch: {
     //根据时间期限查询
     checkTime(value) {
@@ -194,10 +188,11 @@ export default {
       this.maintainData.filter(item => {
         if (item.m_id === this.form.m_id) {
           let time = dayjs().format('YYYY-MM-DD')
-          item.m_status = '维修中'
+          item.m_status = '申请中'
           item.m_history.push({
             root: this.form.u_id,
             time: time,
+            status: '申请中',
             desc: this.form.m_desc || '维修申请'
           })
         }
@@ -209,9 +204,7 @@ export default {
       if (value.m_history.length) {
         this.hasHistory = true
       } else {
-        {
-          this.hasHistory = false
-        }
+        this.hasHistory = false
       }
       let his = []
       for (let i in value.m_history) {
@@ -220,7 +213,8 @@ export default {
           m_name: value.m_name,
           u_id: value.m_history[i].root,
           m_desc: value.m_history[i].desc,
-          m_time: value.m_history[i].time
+          m_time: value.m_history[i].time,
+          status: value.m_history[i].status,
         })
       }
       this.maintainHistory = his
