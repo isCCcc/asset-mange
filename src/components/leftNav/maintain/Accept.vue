@@ -14,11 +14,11 @@
 
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
-          <template v-if="scope.row.m_status!=='申请中'">
-            <el-button type="text" size="small">完成</el-button>
-            <el-button type="text" size="small">失败</el-button>
+          <template v-if="scope.row.m_status=='维修中'">
+            <el-button @click="handleAccept(scope.row,'success')" type="text" size="small">完成</el-button>
+            <el-button @click="handleAccept(scope.row,'fail')" type="text" size="small">失败</el-button>
           </template>
-          <template v-else>
+          <template v-else-if="scope.row.m_status=='申请中'">
             <el-button @click="handleAccept(scope.row)" type="text" size="small">受理</el-button>
           </template>
         </template>
@@ -66,9 +66,29 @@ export default {
     })
   },
   methods: {
-    handleAccept(val) {
-      console.log(val);
-    }
+    // 受理 按钮逻辑,维修 成功 / 失败 按钮逻辑
+    handleAccept(val, flag) {
+      // console.log(this.form);
+      this.form.map(item => {
+        if (item.uni_id === val.uni_id) {
+          if (flag === 'success') item.m_status = '维修完成'
+          else if (flag === 'fail') item.m_status = '维修失败'
+          else item.m_status = '受理中'
+        }
+      })
+      let maintain = JSON.parse(localStorage.getItem('maintainData'))
+      maintain.map(item => {
+        for (let history of item.m_history) {
+          if (history.id === val.uni_id) {
+            if (flag === 'success') history.status = '维修完成'
+            else if (flag === 'fail') history.status = '维修失败'
+            else history.status = '受理中'
+
+          }
+        }
+      })
+      localStorage.setItem('maintainData', JSON.stringify(maintain))
+    },
   }
 }
 </script>
