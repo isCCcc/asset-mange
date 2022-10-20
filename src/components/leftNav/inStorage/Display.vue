@@ -173,7 +173,6 @@ export default {
         localStorage.setItem('assetData', JSON.stringify(this.tableData))
       };
       if( this.currentType == "edit" ){
-        //更新的时候就把弹出来的表单中的数据写到要修改的表格中
         this.record.id=this.tableData[this.currentIndex].id
         this.record.name=this.tableData[this.currentIndex].name
         this.record.uname=this.form.name
@@ -183,8 +182,11 @@ export default {
         this.record.ustatus=this.form.status
         this.record.group=this.tableData[this.currentIndex].group
         this.record.ugroup=this.form.group
+        //更新的时候就把弹出来的表单中的数据写到要修改的表格中
+
 
         this.updateRecordData.push(this.record);
+
         this.tableData[this.currentIndex].name=this.form.name;
         this.tableData[this.currentIndex].num=this.form.num;
         this.tableData[this.currentIndex].status=this.form.status;
@@ -299,9 +301,9 @@ export default {
       storage_uid: '1',
       out_uid: ''
     }]
-    let updateRecordData = [];
+
     localStorage.setItem('assetData', JSON.stringify(tableData))
-    localStorage.setItem('updateRecordData', JSON.stringify(updateRecordData))
+
     this.uid = JSON.parse(localStorage.getItem('user')).uid
   },
 
@@ -342,7 +344,7 @@ export default {
         name: '',
         group: ''
       },
-      updateRecordData:  JSON.parse(localStorage.getItem('updateRecordData')),
+      updateRecordData:  [],
       tableData:  JSON.parse(localStorage.getItem('assetData'))
     }
   }

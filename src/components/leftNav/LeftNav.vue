@@ -19,10 +19,18 @@
     <el-submenu index="2">
       <template slot="title"><i class="el-icon-menu"></i>资产出归</template>
       <el-menu-item-group>
-        <router-link to="/examine">
-          <el-menu-item index="2-1">借用审批</el-menu-item>
+        <router-link to="/borrow">
+          <el-menu-item index="2-1">借用申请</el-menu-item>
         </router-link>
-        <!--        <el-menu-item index="2-2">归还</el-menu-item>-->
+        <router-link to="/examine">
+          <el-menu-item index="2-2">借用审批</el-menu-item>
+        </router-link>
+        <router-link to="/return">
+          <el-menu-item index="2-3">资产归还</el-menu-item>
+        </router-link>
+        <router-link to="/returnTable">
+          <el-menu-item index="2-4">归还记录</el-menu-item>
+        </router-link>
       </el-menu-item-group>
     </el-submenu>
 
@@ -53,7 +61,9 @@
     <el-submenu index="5">
       <template slot="title"><i class="el-icon-setting"></i>资产盘点</template>
       <el-menu-item-group>
-        <el-menu-item index="5-1">资产盘点</el-menu-item>
+        <router-link to="/check">
+          <el-menu-item index="5-1">资产盘点</el-menu-item>
+        </router-link>
       </el-menu-item-group>
     </el-submenu>
   </el-menu>

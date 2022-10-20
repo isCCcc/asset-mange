@@ -13,12 +13,6 @@
           <el-option label="四类" value="四类"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="search(formInline)">查询</el-button>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="add">入库</el-button>
-      </el-form-item>
     </el-form>
 
     <el-table
@@ -78,10 +72,7 @@
           fixed="right"
           label="操作">
         <template slot-scope="scope">
-          <div v-if="scope.row.status == '未通过' ">
-            <el-button @click="agree(scope.$index)" type="text" size="small">通过</el-button>
-            <el-button @click="notagree(scope.$index)" type="text" size="small">驳回</el-button>
-          </div>
+          <el-button @click="returnAsset(scope.$index,scope.row)" type="text" size="small">归还</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -92,59 +83,97 @@
 <script>
 export default {
   methods: {
-    agree(index) {
-      this.tableData[index].status="通过";
-      let aid =this.tableData[index].aid
-      let assetData =  JSON.parse(localStorage.getItem('assetData'))
-      assetData.forEach(function(value,index){
-        if(value.id ==  aid){
-          value.status = 1
+    // 当前时间
+    nowDate() {
+      let nowDate = new Date()
+      let date = nowDate.getFullYear() + '-' + nowDate.getMonth() + '-' + nowDate.getDate()
+      return date
+    },
+    returnAsset(index, row) {
+      //更新的时候就把弹出来的表单中的数据写到要修改的表格中
+      this.returnid++
+      this.returnData.id = this.returnid
+      this.returnData.aid = row.aid
+      this.returnData.aname = row.aname
+      this.returnData.agroup = row.agroup
+      this.returnData.cause = '使用完毕'
+      this.returnData.lid = '1'//JSON.parse(localStorage.getItem('user')).uid
+      this.returnData.status = '已归还'
+      this.returnData.returnTime = this.nowDate();
+
+      this.returnDatas.push(this.returnData);
+      console.log(this.returnDatas)
+      let assetData = JSON.parse(localStorage.getItem('assetData'))
+
+      for (var i = 0; i < assetData.length; i++) {
+        if (assetData[i].id == row.id) {
+          assetData[i].status = 0
         }
-      })
+      }
       localStorage.setItem('assetData', JSON.stringify(assetData))
-    },
-    notagree(index) {
-      this.tableData[index].status="未通过";
+      localStorage.setItem('returnDatas', JSON.stringify(this.returnDatas))
 
-    },
+    }
 
+  },
+  created() {
+    let uid = 1//JSON.parse(localStorage.getItem('user')).uid
+    let lendDatas = JSON.parse(localStorage.getItem('lendDatas'))
+    for (var i = 0; i < lendDatas.length; i++) {
+      if (lendDatas[i].lid == uid) {
+        this.tableData.push(lendDatas[i])
+      }
+    }
+    console.log(this.tableData)
+    let returnDatas = []
+    localStorage.setItem('returnDatas', JSON.stringify(returnDatas))
   },
   computed: {
     // 模糊搜索
-    tables () {
+    tables() {
       const {
         name,
         group
       } = this.formInline
       return this.tableData.filter((item) => { //使用过滤方法
-        let matchname=true;
-        let matchgroup=true;
-        if(name){
+        let matchname = true;
+        let matchgroup = true;
+        if (name) {
           // debugger
-          const keys=name.toUpperCase().replace("","").split("");
-          matchname=keys.every(key=>item.name.toUpperCase().includes(key));
+          const keys = name.toUpperCase().replace("", "").split("");
+          matchname = keys.every(key => item.name.toUpperCase().includes(key));
         }
-        if(group){
+        if (group) {
           // debugger
-          const keys=group.toUpperCase().replace("","").split("");
+          const keys = group.toUpperCase().replace("", "").split("");
           // console.log(keys)
-          matchgroup=keys.every(key=>item.group.toUpperCase().includes(key));
+          matchgroup = keys.every(key => item.group.toUpperCase().includes(key));
           // console.log(matchname)
         }
         return matchname && matchgroup
       });
     }
   },
-
   data() {
     return {
-
+      returnid: 0,
       formInline: {
         name: '',
         group: ''
       },
+      tableData: [],
+      returnData: {
+        id: '',
+        aid: '',
+        aname: '',
+        agroup: '',
+        cause: '',
+        lid: '',
+        status: '',
+        returnTime: '',
+      },
+      returnDatas: JSON.parse(localStorage.getItem('returnDatas'))
 
-      tableData: JSON.parse(localStorage.getItem('lendDatas'))
     }
   }
 }

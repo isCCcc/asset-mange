@@ -13,12 +13,6 @@
           <el-option label="四类" value="四类"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="search(formInline)">查询</el-button>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="add">入库</el-button>
-      </el-form-item>
     </el-form>
 
     <el-table
@@ -64,26 +58,16 @@
 
       <el-table-column
           prop="status"
-          label="申请状态"
+          label="归还状态"
           width="120">
       </el-table-column>
 
       <el-table-column
-          prop="applicationTime"
-          label="申请时间"
-          width="120">
+          prop="returnTime"
+          label="归还时间">
       </el-table-column>
 
-      <el-table-column
-          fixed="right"
-          label="操作">
-        <template slot-scope="scope">
-          <div v-if="scope.row.status == '未通过' ">
-            <el-button @click="agree(scope.$index)" type="text" size="small">通过</el-button>
-            <el-button @click="notagree(scope.$index)" type="text" size="small">驳回</el-button>
-          </div>
-        </template>
-      </el-table-column>
+
     </el-table>
 
   </div>
@@ -92,21 +76,8 @@
 <script>
 export default {
   methods: {
-    agree(index) {
-      this.tableData[index].status="通过";
-      let aid =this.tableData[index].aid
-      let assetData =  JSON.parse(localStorage.getItem('assetData'))
-      assetData.forEach(function(value,index){
-        if(value.id ==  aid){
-          value.status = 1
-        }
-      })
-      localStorage.setItem('assetData', JSON.stringify(assetData))
-    },
-    notagree(index) {
-      this.tableData[index].status="未通过";
-
-    },
+  },
+  created() {
 
   },
   computed: {
@@ -135,16 +106,13 @@ export default {
       });
     }
   },
-
   data() {
     return {
-
       formInline: {
         name: '',
         group: ''
       },
-
-      tableData: JSON.parse(localStorage.getItem('lendDatas'))
+      tableData:  JSON.parse(localStorage.getItem('returnDatas'))
     }
   }
 }

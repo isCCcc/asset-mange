@@ -10,6 +10,10 @@ import Audit from "@/components/leftNav/scrap/Audit";
 import NoAllow from "@/components/leftNav/NoAllow";
 import Accept from "@/components/leftNav/maintain/Accept";
 import Verify from "@/components/leftNav/inStorage/Verify";
+import ReturnTable from "@/components/leftNav/outStorage/ReturnTable";
+import Borrow from "@/components/leftNav/outStorage/Borrow";
+import Return from "@/components/leftNav/outStorage/Return";
+import Check from "@/components/leftNav/check/Check";
 
 Vue.use(VueRouter)
 
@@ -23,7 +27,7 @@ const routes = [
         path: '/home',
         name: 'home',
         component: HomeView,
-        redirect:'/display',
+        redirect: '/display',
         children: [
             {
                 path: '/display',
@@ -43,11 +47,28 @@ const routes = [
                 path: '/accept',
                 name: '受理中心',
                 component: Accept,
-            }, {
+            },
+            {
+                path: '/borrow',
+                name: '借用申请',
+                component: Borrow,
+            },
+            {
                 path: '/examine',
                 name: '借用审批',
                 component: Examine,
-            }, {
+            },
+            {
+                path: '/return',
+                name: '资产归还',
+                component: Return,
+            },
+            {
+                path: '/returnTable',
+                name: '归还记录',
+                component: ReturnTable,
+            },
+            {
                 path: '/scrap',
                 name: '报废中心',
                 component: Scrap,
@@ -55,6 +76,10 @@ const routes = [
                 path: '/audit',
                 name: '审核中心',
                 component: Audit,
+            }, {
+                path: '/check',
+                name: '资产盘点',
+                component: Check,
             },
             {
                 path: '/noAllow',
