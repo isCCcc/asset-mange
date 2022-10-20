@@ -6,12 +6,17 @@
         <el-input placeholder="已废设备" v-model="scrapName"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button @click="apply">报废申请</el-button>
+        <el-button @click="dialogVisible = true">报废申请</el-button>
       </el-form-item>
+      <el-form-item>
+        <el-button @click="applyHistory">申请历史</el-button>
+      </el-form-item>
+      `
     </el-form>
 
     <!--  报废历史  -->
     <div class="scarp-history">
+      报废历史
       <template v-for="item in scrapData">
         <el-descriptions :title="item.s_name" class="history-item">
           <el-descriptions-item label="设备编号">{{ item.s_id }}</el-descriptions-item>
@@ -62,6 +67,26 @@
         <el-button type="primary" @click="onSubmit" :plain="true">确 定</el-button>
       </span>
     </el-dialog>
+
+    <!--  申请历史弹出框信息  -->
+    <el-dialog title="申请历史" :visible.sync="historyVisible"
+               width="50%" :before-close="handleClose">
+
+      <el-table :data="scrapHistory" style="width: 100%">
+        <el-table-column prop="s_id" label="设备编号">
+        </el-table-column>
+        <el-table-column prop="s_name" label="设备名称">
+        </el-table-column>
+        <el-table-column prop="s_time" label="申请时间">
+        </el-table-column>
+        <el-table-column prop="s_uid" label="申请人">
+        </el-table-column>
+        <el-table-column prop="s_status" label="审核状况" style="color:red;">
+        </el-table-column>
+
+      </el-table>
+
+    </el-dialog>
   </div>
 </template>
 
@@ -75,6 +100,7 @@ export default {
       source: JSON.parse(localStorage.getItem('scrapData'))
           .sort((a, b) => dayjs(b.s_time) - dayjs(a.s_time)),
       assetData: JSON.parse(localStorage.getItem('assetData')),
+      scrapHistory: JSON.parse(localStorage.getItem('scrapHistory')) || [],
       scrapData: '',  // 报废设备信息
       scrapName: '',  // 查找报废设备名称
       dialogVisible: false, // 报废申请弹出框
@@ -86,6 +112,25 @@ export default {
       tag: '正常报废', // 报废标签
       result: '', // 报废原因
       flag: false, //报废状态
+
+      historyVisible: false, // 申请历史弹出框
+      tableData: [{
+        date: '2016-05-02',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
+      }, {
+        date: '2016-05-04',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1517 弄'
+      }, {
+        date: '2016-05-01',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1519 弄'
+      }, {
+        date: '2016-05-03',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1516 弄'
+      }]
     }
   },
   created() {
@@ -100,10 +145,7 @@ export default {
           .catch(_ => {
           });
     },
-    // 报废申请
-    apply() {
-      this.dialogVisible = true
-    },
+    //报废申请
     onSubmit() {
       //将新增数据存储到scrapData中
       if (this.flag) {
@@ -116,17 +158,32 @@ export default {
           s_uid: this.uid,
           s_res: this.result,
           s_tag: this.tag,
+          s_status: '待审批',
         }
-        this.source.push(scrapItem)
-        this.source.sort((a, b) => dayjs(b.s_time) - dayjs(a.s_time))
-        localStorage.setItem('scrapData', JSON.stringify(this.source))
-        //  将删除设备从assetData中删掉
-        let newAssetData = this.assetData.filter(item => item.id != this.id)
-        localStorage.setItem('assetData', JSON.stringify(newAssetData))
+        this.scrapHistory.push(scrapItem)
+        localStorage.setItem('scrapHistory', JSON.stringify(this.scrapHistory))
+        this.$message({
+          showClose: true,
+          message: '申请成功',
+          type: 'success'
+        });
+
+        //   this.source.push(scrapItem)
+        //   this.source.sort((a, b) => dayjs(b.s_time) - dayjs(a.s_time))
+        //   localStorage.setItem('scrapData', JSON.stringify(this.source))
+        //   //  将删除设备从assetData中删掉
+        //   let newAssetData = this.assetData.filter(item => item.id != this.id)
+        //   localStorage.setItem('assetData', JSON.stringify(newAssetData))
       } else {
         this.$message.error('提交错误！请输入正确的设备编号');
       }
     },
+    //报废申请历史
+    applyHistory() {
+      this.historyVisible = true
+      console.log(this.scrapHistory);
+    },
+
   },
   watch: {
     // 监视已废设备输入框
@@ -141,7 +198,6 @@ export default {
     },
     //  监视申请报废id输入框
     id(val) {
-      console.log(this.assetData);
       let data = this.assetData.filter(item => item.id === val)[0]
       if (data) {
         this.flag = true
