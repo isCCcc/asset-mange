@@ -190,6 +190,7 @@ export default {
           let time = dayjs().format('YYYY-MM-DD')
           item.m_status = '申请中'
           item.m_history.push({
+            id:dayjs(), // 标识每一个子数据
             root: this.form.u_id,
             time: time,
             status: '申请中',
