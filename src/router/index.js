@@ -5,10 +5,16 @@ import Display from "@/components/leftNav/inStorage/Display";
 import Maintain from "@/components/leftNav/maintain/Maintain";
 import Examine from "@/components/leftNav/outStorage/Examine";
 import Scrap from "@/components/leftNav/scrap/Scrap";
+import Login from "@/views/Login";
 
 Vue.use(VueRouter)
 
 const routes = [
+    {
+        path: '/login',
+        name: 'login',
+        component: Login,
+    },
     {
         path: '/',
         name: 'home',
