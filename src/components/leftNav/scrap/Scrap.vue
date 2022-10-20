@@ -73,21 +73,11 @@
                width="50%" :before-close="handleClose">
 
       <el-table stripe :data="scrapHistory" style="width: 100%">
-        <el-table-column prop="s_id" label="设备编号">
-        </el-table-column>
-        <el-table-column prop="s_name" label="设备名称">
-        </el-table-column>
-        <el-table-column prop="s_time" label="申请时间">
-        </el-table-column>
-        <el-table-column prop="s_uid" label="申请人">
-        </el-table-column>
-        <!--折叠面板-->
-        <!--        <el-collapse-item title="可控 Controllability" name="4">-->
-        <!--          <div>用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>-->
-        <!--          <div>结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。</div>-->
-        <!--        </el-collapse-item>-->
-        <!--        <el-table-column prop="s_status" label="审核状况" style="color:red;">-->
-        <!--        </el-table-column>-->
+        <el-table-column prop="s_id" label="设备编号" />
+        <el-table-column prop="s_name" label="设备名称" />
+        <el-table-column prop="s_time" label="申请时间" />
+        <el-table-column prop="s_uid" label="申请人" />
+        <el-table-column prop="s_res" label="申请原因" />
         <el-table-column prop="s_status" label="审核状况" width="200">
           <template slot-scope="scope">
             <div>
