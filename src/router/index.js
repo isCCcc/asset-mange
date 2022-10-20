@@ -22,15 +22,12 @@ const routes = [
         path: '/',
         name: 'home',
         component: HomeView,
+        redirect:'/display',
         children: [
             {
                 path: '/display',
                 name: '资产入库',
                 component: Display,
-                // hidden: true,
-                // meta: {
-                //   requireAuth: false
-                // }
             }, {
                 path: '/maintain',
                 name: '产品维修',

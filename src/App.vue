@@ -14,7 +14,7 @@ export default {
     if (!JSON.parse(localStorage.getItem('user'))) {
       localStorage.setItem('user', JSON.stringify([
         {
-          uid: '001',
+          uid: '04190000',
           uname: '超级管理员',
           identity: '超级管理员',
           pwd: '123456'
@@ -25,13 +25,13 @@ export default {
     if (!JSON.parse(localStorage.getItem('userList'))) {
       localStorage.setItem('userList', JSON.stringify([
         {
-          uid: '007',
+          uid: '04190000',
           uname: '超级管理员',
           identity: '超级管理员',
           pwd: '123456'
         },
         {
-          uid: '001',
+          uid: '04191111',
           uname: '普通管理员',
           identity: '普通管理员',
           pwd: '123456'
