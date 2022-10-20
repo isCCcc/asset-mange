@@ -38,6 +38,9 @@
         <router-link to="/scrap">
           <el-menu-item index="4-1">报废中心</el-menu-item>
         </router-link>
+        <router-link to="/audit">
+          <el-menu-item index="4-2">审核中心</el-menu-item>
+        </router-link>
       </el-menu-item-group>
     </el-submenu>
 
