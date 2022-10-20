@@ -147,6 +147,7 @@ export default {
           s_res: this.result,
           s_tag: this.tag,
           s_status: '待审批',
+          s_detail:'', // 驳回意见
         }
         this.scrapHistory.push(scrapItem)
         localStorage.setItem('scrapHistory', JSON.stringify(this.scrapHistory))
